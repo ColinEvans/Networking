@@ -31,7 +31,7 @@ final class URLSessionTests: XCTestCase {
   
   func test_load_withEncodedDataAndStatus200_matchesExpected() async throws {
     // Arrange
-    let mock = Mock(url: mockURL, dataType: .json, statusCode: 200, data: [.get: encodedResult])
+    let mock = Mock(url: mockURL, contentType: .json, statusCode: 200, data: [.get: encodedResult])
     
     // Act
     mock.register()
@@ -43,7 +43,7 @@ final class URLSessionTests: XCTestCase {
   
   func test_load_throwsBadServerResponse_matchesExpected() async throws {
     // Arrange
-    let mock = Mock(url: mockURL, dataType: .json, statusCode: 400, data: [.get: encodedResult])
+    let mock = Mock(url: mockURL, contentType: .json, statusCode: 400, data: [.get: encodedResult])
     
     // Act & Assert
     mock.register()
