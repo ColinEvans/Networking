@@ -32,7 +32,7 @@ final class URLRequestBuilderTests: XCTestCase {
   
   func test_URLRequestBuilder_withQueryItem_matchesURL() {
     // Arrange
-    var expectedURL = URL(string: url.absoluteString + "?example=result")
+    let expectedURL = URL(string: url.absoluteString + "?example=result")
     
     // Act
     sut.withQueryItem(name: "example", value: "result")

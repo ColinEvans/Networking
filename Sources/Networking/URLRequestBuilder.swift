@@ -12,7 +12,7 @@ public class URLRequestBuilder {
   private var request: URLRequest
   private let url: URL
   
-  init(_ url: URL) {
+  public init(_ url: URL) {
     self.request = URLRequest(url: url)
     self.url = url
   }
