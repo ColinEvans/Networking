@@ -18,7 +18,7 @@ final class URLSessionTests: XCTestCase {
 
     expectedResult = MockData(testInt: 42, testString: "Hello")
     sut = Resource(
-      url: mockURL,
+      urlRequest: URLRequest(url: mockURL),
       parse: {
         guard let value = try? JSONDecoder().decode(MockData.self, from: $0) else {
           throw MockDataError.dataNotFound
