@@ -30,12 +30,26 @@ final class URLRequestBuilderTests: XCTestCase {
     XCTAssertEqual(sut.retrieveRequest().httpMethod, expectedRequest.httpMethod)
   }
   
-  func test_URLRequestBuilder_withQueryItem_matchesURL() {
+  func test_URLRequestBuilder_withSingleQueryItem_matchesURL() {
     // Arrange
     let expectedURL = URL(string: url.absoluteString + "?example=result")
     
     // Act
-    sut.withQueryItem(name: "example", value: "result")
+    sut.addQueryItems(for: (name:"example", value: "result"))
+    
+    // Assert
+    XCTAssertEqual(
+      sut.retrieveRequest().url?.absoluteString,
+      expectedURL?.absoluteString
+    )
+  }
+  
+  func test_URLRequestBuild_withMultipleQueryItems_matchesURL() {
+    // Arrange
+    let expectedURL = URL(string: url.absoluteString + "?example=result&other=newResult")
+    
+    // Act
+    sut.addQueryItems(for: (name:"example", value: "result"),(name:"other", value:"newResult"))
     
     // Assert
     XCTAssertEqual(

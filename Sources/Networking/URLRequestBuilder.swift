@@ -32,11 +32,13 @@ extension URLRequestBuilder: URLRequestBuilding {
     request.httpMethod = method.rawValue
   }
   
-  public func withQueryItem(name: String, value: String?) {
+  public func addQueryItems(for parameters: (name: String, value: String?)...) {
     var url = request.url
-    let queryItem = URLQueryItem(name: name, value: value)
-    if #available(iOS 16.0, *) {
-      url?.append(queryItems: [queryItem])
+    parameters.forEach { parameter in
+      let queryItem = URLQueryItem(name: parameter.name, value: parameter.value)
+      if #available(iOS 16.0, *) {
+        url?.append(queryItems: [queryItem])
+      }
     }
 
     request.url = url

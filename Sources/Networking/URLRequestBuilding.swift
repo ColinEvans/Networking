@@ -23,13 +23,11 @@ public protocol URLRequestBuilding {
   /// - Parameter method: a type-safe `HTTP` method to assign to the request
   func withRequestType(method: HTTPMethod)
   
-  /// Appends a query item to the request being built.
+  /// Appends a list of n query items to the request being built.
   ///  Convenience method to map a query parameter name and value pairing to a `URLQueryItem`
   ///
-  /// - Parameters:
-  ///   - name: The name of the query being appended to the `URL`
-  ///   - value: Optional value for the query name
-  func withQueryItem(name: String, value: String?)
+  /// - Parameter parameters: a variadic list of (name, value) tuples of query items appended to the request
+  func addQueryItems(for parameters: (name: String, value: String?)...)
   
   /// Retrieve the `URLRequest` that has been composed by zero or more of the building methods
   ///
