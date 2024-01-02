@@ -7,16 +7,7 @@
 
 import Foundation
 
-public enum HeaderType: String {
-  case auth = "Authorization" //authorization
-}
-
-public protocol URLRequestBuilding {
-  func withHeaderOptions(headerType: HeaderType, value: String)
-  func withRequestType(method: HTTPMethod)
-  func withQueryItem(name: String, value: String?)
-}
-
+/// Concrete `Builder` implementation of `URLRequestBuilding`
 public class URLRequestBuilder {
   private var request: URLRequest
   private let url: URL
@@ -26,17 +17,12 @@ public class URLRequestBuilder {
     self.url = url
   }
 
-  func retrieveRequest() -> URLRequest {
-    let result = request
-    reset()
-    return result
-  }
-  
   func reset() {
     request = URLRequest(url: url)
   }
 }
 
+// MARK: - Extensions<URLRequestBuilding>
 extension URLRequestBuilder: URLRequestBuilding {
   public func withHeaderOptions(headerType: HeaderType, value: String) {
     request.setValue(value, forHTTPHeaderField: headerType.rawValue)
@@ -54,5 +40,11 @@ extension URLRequestBuilder: URLRequestBuilding {
     }
 
     request.url = url
+  }
+  
+  public func retrieveRequest() -> URLRequest {
+    let result = request
+    reset()
+    return result
   }
 }
