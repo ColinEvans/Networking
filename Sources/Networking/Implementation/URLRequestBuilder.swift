@@ -24,21 +24,26 @@ public class URLRequestBuilder {
 
 // MARK: - Extensions<URLRequestBuilding>
 extension URLRequestBuilder: URLRequestBuilding {
-  public func withHeaderOptions(headerType: HeaderType, value: String) {
-    request.setValue(value, forHTTPHeaderField: headerType.rawValue)
+  public func withHeaderOptions(headers: [String : String]) {
+    headers.keys.compactMap { key -> String? in
+      guard HeaderType(rawValue: key) != nil else { return nil }
+      return key
+    }.forEach {
+      guard let value = headers[$0] else {
+        return
+      }
+      request.setValue(value, forHTTPHeaderField: $0)
+    }
   }
   
   public func withRequestType(method: HTTPMethod) {
     request.httpMethod = method.rawValue
   }
   
-  public func addQueryItems(for parameters: (name: String, value: String?)...) {
+  public func addQueryItems(for parameters: [String : String]) {
     var url = request.url
-    parameters.forEach { parameter in
-      let queryItem = URLQueryItem(name: parameter.name, value: parameter.value)
-      if #available(iOS 16.0, *) {
-        url?.append(queryItems: [queryItem])
-      }
+    if #available(iOS 16.0, *) {
+      url?.append(queryItems: parameters.map { URLQueryItem(name: $0, value: $1) })
     }
 
     request.url = url
