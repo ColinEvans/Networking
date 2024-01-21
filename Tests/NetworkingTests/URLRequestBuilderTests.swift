@@ -35,7 +35,7 @@ final class URLRequestBuilderTests: XCTestCase {
     let expectedURL = URL(string: url.absoluteString + "?example=result")
     
     // Act
-    sut.addQueryItems(for: (name:"example", value: "result"))
+    sut.addQueryItems(for: ["example" : "result"])
     
     // Assert
     XCTAssertEqual(
@@ -47,9 +47,9 @@ final class URLRequestBuilderTests: XCTestCase {
   func test_URLRequestBuild_withMultipleQueryItems_matchesURL() {
     // Arrange
     let expectedURL = URL(string: url.absoluteString + "?example=result&other=newResult")
-    
+  
     // Act
-    sut.addQueryItems(for: (name:"example", value: "result"),(name:"other", value:"newResult"))
+    sut.addQueryItems(for: ["example" : "result", "other" : "newResult"])
     
     // Assert
     XCTAssertEqual(

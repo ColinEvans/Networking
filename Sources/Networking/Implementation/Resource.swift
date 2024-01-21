@@ -9,21 +9,19 @@ import Foundation
 
 /// Groups  related endpoint `URL` with a parse function to map the `Data` into the concrete
 /// type passed into the struct
-public struct Resource<A> {
-  let request: URLRequest
+public struct Resource<A: Decodable> {
   let parse: (Data) throws -> A
   
-  init(urlRequest: URLRequest, parse: @escaping (Data) throws -> A) {
-    self.request = urlRequest
+  init(parse: @escaping (Data) throws -> A) {
     self.parse = parse
   }
 }
 
-extension Resource where A: Codable {
-  init(json urlRequest: URLRequest) {
+public extension Resource {
+  init() {
     let parse = {
       try JSONDecoder().decode(A.self, from: $0)
     }
-    self.init(urlRequest: urlRequest, parse: parse)
+    self.init(parse: parse)
   }
 }
