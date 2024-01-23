@@ -12,7 +12,7 @@ import Foundation
 public struct Resource<A: Decodable> {
   let parse: (Data) throws -> A
   
-  init(parse: @escaping (Data) throws -> A) {
+  public init(parse: @escaping (Data) throws -> A) {
     self.parse = parse
   }
 }
